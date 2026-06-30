@@ -152,7 +152,7 @@ export function ImageRevealSection() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full bg-black text-white" style={{ height: "400vh" }}>
+    <div ref={containerRef} className="relative w-full bg-black text-white min-h-[400vh]" style={{ height: "400vh" }}>
       {/* 2-3% Opacity Film Grain Texture Overlay */}
       <div 
         className="fixed inset-0 pointer-events-none z-40 opacity-[0.025]"
