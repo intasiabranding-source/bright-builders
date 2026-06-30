@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { Building2 } from "lucide-react";
+import { motion, useInView, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { Building2 } from 'lucide-react';
 
 interface ProjectItem {
   id: string;
@@ -85,116 +85,104 @@ const projectsData: ProjectItem[] = [
   },
 ];
 
-const StickyCard_001 = ({
-  i,
-  title,
-  description,
-  imgUrl,
-  number,
-  progress,
-  range,
-  targetScale,
-}: {
-  i: number;
-  title: string;
-  description: string;
-  imgUrl: string;
-  number: string;
-  progress: any;
-  range: [number, number];
-  targetScale: number;
-}) => {
-  const container = useRef<HTMLDivElement>(null);
-  const scale = useTransform(progress, range, [1, targetScale]);
-
-  return (
-    <div
-      ref={container}
-      className="sticky top-0 flex min-h-screen items-center justify-center px-4 md:px-6 z-10"
-    >
-      <motion.div
-        style={{
-          scale,
-          top: `calc(10vh + ${i * 24}px)`,
-        }}
-        className="relative flex flex-col md:flex-row h-[75vh] md:h-[60vh] w-full max-w-4xl origin-top rounded-3xl border border-white/10 bg-zinc-950 overflow-hidden shadow-[0_-20px_50px_rgba(0,0,0,0.8)]"
-      >
-        {/* Left/Top Content Column */}
-        <div className="w-full md:w-1/2 flex flex-col justify-between p-6 md:p-12 z-10 select-none text-white bg-zinc-950">
-          <div>
-            <span className="text-3xl md:text-5xl font-bold tracking-widest block font-sans text-[#8A78B4]/20 mb-4 md:mb-6">
-              {number}
-            </span>
-            <h3 className="text-xl md:text-3xl font-bold font-display leading-tight text-white mb-3">
-              {title}
-            </h3>
-            <p className="text-xs md:text-sm text-gray-400 font-sans font-light leading-relaxed">
-              {description}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A78B4] opacity-80 pt-4 border-t border-white/5 mt-4">
-            <Building2 className="w-4 h-4" />
-            <span>BT Bright Builders</span>
-          </div>
-        </div>
-
-        {/* Right/Bottom Image Column */}
-        <div className="w-full md:w-1/2 h-[45%] md:h-full relative overflow-hidden bg-black">
-          <img 
-            src={imgUrl} 
-            alt={title} 
-            className="w-full h-full object-cover" 
-            loading="lazy" 
-          />
-        </div>
-      </motion.div>
-    </div>
-  );
-};
-
 export function ImageRevealSection() {
-  const container = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"],
-  });
-
   return (
-    <div className="w-full bg-black text-white py-16 md:py-28 border-t border-white/5">
-      <div className="text-center max-w-2xl mx-auto mb-12 px-6">
+    <div className="w-full bg-black text-white px-4 md:px-12 lg:px-16 py-20 md:py-28 max-w-7xl mx-auto border-t border-white/5">
+      <div className="text-center max-w-2xl mx-auto mb-16">
         <span className="text-xs uppercase tracking-widest text-[#8A78B4] font-semibold block mb-2">// OUR PORTFOLIO</span>
         <h2 className="text-4xl md:text-5xl font-light tracking-tight text-white font-display">Featured Projects</h2>
         <p className="text-gray-400 mt-3 text-sm md:text-base font-light">
-          Scroll down to reveal our stacked portfolio projects.
+          A showcase of our premium residential, commercial, and interior design executions.
         </p>
       </div>
 
-      <main
-        ref={container}
-        className="relative flex w-full flex-col items-center justify-center pb-[10vh]"
-      >
-        {projectsData.map((project, i) => {
-          const targetScale = Math.max(
-            0.8,
-            1 - (projectsData.length - i - 1) * 0.02,
-          );
-          const rangeStart = i * (1 / projectsData.length);
-          return (
-            <StickyCard_001
-              key={project.id}
-              i={i}
-              title={project.title}
-              description={project.description}
-              imgUrl={project.imgUrl}
-              number={project.number}
-              progress={scrollYProgress}
-              range={[rangeStart, 1]}
-              targetScale={targetScale}
-            />
-          );
-        })}
-      </main>
+      <div className="relative flex w-full flex-col items-center gap-[6vh] py-[4vh]">
+        {projectsData.map((project, idx) => (
+          <StickyProjectCard key={project.id} project={project} index={idx} />
+        ))}
+      </div>
     </div>
   );
 }
+
+const StickyProjectCard = ({ project, index }: { project: ProjectItem; index: number }) => {
+  const vertMargin = 12;
+  const container = useRef<HTMLDivElement>(null);
+  const [maxScrollY, setMaxScrollY] = useState(Infinity);
+
+  const filter = useMotionValue(0);
+  const negateFilter = useTransform(filter, (value) => -value);
+
+  const { scrollY } = useScroll({
+    target: container,
+  });
+  const scale = useTransform(scrollY, [maxScrollY, maxScrollY + 10000], [1, 0]);
+  const isInView = useInView(container, {
+    margin: `0px 0px -${100 - vertMargin}% 0px`,
+    once: true,
+  });
+
+  scrollY.on("change", (latestScrollY) => {
+    let animationValue = 1;
+    if (latestScrollY > maxScrollY) {
+      animationValue = Math.max(0, 1 - (latestScrollY - maxScrollY) / 10000);
+    }
+
+    scale.set(animationValue);
+    filter.set((1 - animationValue) * 100);
+  });
+
+  useEffect(() => {
+    if (isInView) {
+      setMaxScrollY(scrollY.get());
+    }
+  }, [isInView]);
+
+  return (
+    <motion.div
+      ref={container}
+      className="sticky w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-zinc-950 flex flex-col md:flex-row"
+      style={{
+        scale: scale,
+        rotate: filter,
+        height: `calc(${100 - 2 * vertMargin}vh - 30px)`,
+        top: `${vertMargin}vh`,
+        zIndex: index + 1,
+        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.6)"
+      }}
+    >
+      {/* Narrative Info Block */}
+      <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-between select-none z-15 bg-zinc-950/80 backdrop-blur-md">
+        <div>
+          <div className="text-3xl md:text-5xl font-bold tracking-widest text-[#8A78B4]/20 font-sans block mb-4">
+            {project.number}
+          </div>
+          <h3 className="text-2xl md:text-3xl font-semibold font-display text-white mb-4">
+            {project.title}
+          </h3>
+          <p className="text-xs sm:text-sm md:text-base text-gray-400 font-sans font-light leading-relaxed">
+            {project.description}
+          </p>
+        </div>
+        
+        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A78B4] opacity-80 pt-4 border-t border-white/5 mt-6">
+          <Building2 className="w-3.5 h-3.5" />
+          <span>BT Bright Builders</span>
+        </div>
+      </div>
+
+      {/* Image Area */}
+      <div className="w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden bg-black flex-1">
+        <motion.img
+          src={project.imgUrl}
+          alt={project.title}
+          style={{
+            rotate: negateFilter,
+          }}
+          className="h-full w-full scale-125 object-cover"
+          loading="eager"
+        />
+      </div>
+    </motion.div>
+  );
+};
