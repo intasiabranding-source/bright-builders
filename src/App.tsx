@@ -92,9 +92,9 @@ export default function App() {
     const handleScrollDirection = () => {
       const currentScrollY = window.scrollY;
       
-      // If we are inside the home section, hide the navbar
+      // If we are inside the home section, show the navbar
       if (currentScrollY < window.innerHeight) {
-        setShowNav(false);
+        setShowNav(true);
       } else {
         // After the home section, show/hide based on scroll direction
         if (currentScrollY > lastScrollYVal) {
