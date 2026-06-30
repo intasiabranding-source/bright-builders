@@ -195,8 +195,12 @@ export default function App() {
       </div>
 
       {/* Brand Logo header strip with transparent background */}
-      <header className={`fixed top-0 left-0 w-full z-45 px-6 md:px-12 lg:px-16 py-6 pointer-events-none transition-all duration-1000 delay-300 ${
+      <header className={`fixed left-0 w-full z-45 px-6 md:px-12 lg:px-16 py-6 pointer-events-none transition-all duration-1000 delay-300 ${
         isLoading ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+      } ${
+        activeTab === 'home' 
+          ? 'top-[76px] md:top-0' 
+          : 'top-0'
       }`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto">
           <button 
