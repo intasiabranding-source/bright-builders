@@ -122,10 +122,12 @@ export function ImageRevealSection() {
         {projectsData.map((project) => (
           <div 
             key={project.id}
-            className="w-full min-h-screen h-screen flex flex-col md:flex-row bg-black border border-white/10 sm:border-0 border-b border-white/5 overflow-hidden sticky top-0"
+            className="w-full h-auto min-h-0 relative md:sticky md:top-0 md:min-h-screen md:h-screen flex flex-col md:flex-row bg-black overflow-hidden px-4 py-6 md:p-0"
           >
+            {/* Inner responsive card wrapper with curved border on mobile */}
+            <div className="w-full h-full flex flex-col md:flex-row border border-white/10 md:border-0 rounded-2xl md:rounded-none overflow-hidden">
             {/* Left Column: Narrative Content */}
-            <div className="w-full md:w-1/2 h-[35vh] md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white! pl-8 sm:pl-20 md:pl-28">
+            <div className="w-full md:w-1/2 h-auto md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white! pl-8 sm:pl-20 md:pl-28">
               {/* Floating Section Number */}
               <div className="h-12 md:h-16 relative">
                 <span className="text-3xl md:text-7xl font-bold tracking-widest block font-sans text-[#8A78B4]/20">
@@ -153,13 +155,14 @@ export function ImageRevealSection() {
             </div>
 
             {/* Right Column: Project Image Area */}
-            <div className="w-full md:w-1/2 h-[65vh] md:h-full relative overflow-hidden bg-black">
+            <div className="w-full md:w-1/2 h-[40vh] md:h-full relative overflow-hidden bg-black">
               <img 
                 src={project.imgUrl} 
                 alt={project.title} 
                 className="w-full h-full object-cover"
                 loading="eager"
               />
+            </div>
             </div>
           </div>
         ))}
