@@ -129,7 +129,7 @@ export function ImageRevealSection() {
             className="w-full h-auto min-h-0 relative md:sticky md:top-0 md:min-h-screen md:h-screen flex flex-col md:flex-row bg-black overflow-hidden px-4 py-6 md:p-0"
           >
             {/* Inner responsive card wrapper with curved border on mobile */}
-            <div className="w-full h-full flex flex-col md:flex-row border border-white/10 md:border-0 rounded-2xl md:rounded-none overflow-hidden transition-all duration-500 hover:border-[#8A78B4]/30 hover:shadow-[0_8px_30px_rgba(138,120,180,0.15)]">
+            <div className="w-full h-full flex flex-col md:flex-row border border-white/10 md:border-0 rounded-2xl md:rounded-none overflow-hidden transition-all duration-500 hover:border-[#8A78B4]/30 shadow-[0_15px_35px_rgba(0,0,0,0.85)] hover:shadow-[0_8px_30px_rgba(138,120,180,0.15)]">
             {/* Left Column: Narrative Content */}
             <div className="w-full md:w-1/2 h-auto md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white! pl-8 sm:pl-20 md:pl-28">
               {/* Floating Section Number */}
