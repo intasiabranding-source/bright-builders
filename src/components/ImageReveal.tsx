@@ -95,7 +95,7 @@ export function ImageRevealSection() {
     <div ref={containerRef} className="w-full bg-black text-white relative">
       
       {/* Creative follow SVG line animation layer */}
-      <div className="absolute left-[8%] md:left-[5%] top-0 h-full w-[4px] md:w-[6px] pointer-events-none z-10 hidden sm:block">
+      <div className="absolute left-[8%] md:left-[5%] top-0 h-full w-[4px] md:w-[6px] pointer-events-none z-10 block">
         <div className="w-full h-full bg-white/5 relative">
           <motion.div 
             className="w-full bg-[#8A78B4] absolute top-0 origin-top shadow-[0_0_12px_#8A78B4]"
@@ -122,7 +122,7 @@ export function ImageRevealSection() {
         {projectsData.map((project) => (
           <div 
             key={project.id}
-            className="w-full min-h-screen h-screen flex flex-col md:flex-row bg-black border-b border-white/5 overflow-hidden sticky top-0"
+            className="w-full min-h-screen h-screen flex flex-col md:flex-row bg-black border border-white/10 sm:border-0 border-b border-white/5 overflow-hidden sticky top-0"
           >
             {/* Left Column: Narrative Content */}
             <div className="w-full md:w-1/2 h-[35vh] md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white! pl-12 sm:pl-20 md:pl-28">
