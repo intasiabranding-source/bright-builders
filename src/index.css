@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter Tight', sans-serif;
+  --font-display: 'Cormorant Garamond', serif;
+}
+
+body {
+  font-family: 'Inter Tight', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #FAF5F0; /* Soft Peach White */
+  color: #1A1A1A; /* Black text for readability */
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Headings H1 - H6 Cormorant Garamond Premium Editorial Serif configuration */
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem; /* 64px Desktop default */
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: #0A0A0A;
+}
+
+@media (min-width: 1280px) {
+  h1 {
+    font-size: 5rem; /* 80px Large Desktop */
+  }
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; /* 48px Desktop default */
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #0A0A0A;
+}
+
+@media (min-width: 1280px) {
+  h2 {
+    font-size: 3.75rem; /* 60px Large Desktop */
+  }
+}
+
+h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.125rem; /* 34px default */
+  font-weight: 600;
+  line-height: 1.2;
+  color: #0A0A0A;
+}
+
+@media (min-width: 1280px) {
+  h3 {
+    font-size: 2.625rem; /* 42px */
+  }
+}
+
+h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; /* 24px */
+  font-weight: 600;
+  line-height: 1.25;
+  color: #0A0A0A;
+}
+
+@media (min-width: 1280px) {
+  h4 {
+    font-size: 1.875rem; /* 30px */
+  }
+}
+
+/* Body Content Redesign for Spacious Modern readability */
+p {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 400;
+  line-height: 1.7; /* 170% Height */
+  color: #4A4A4A;
+  max-width: 75ch; /* Comfortable paragraph layout width (65-75 chars) */
+}
+
+@media (min-width: 1280px) {
+  p {
+    font-size: 1.25rem; /* 20px body font size desktop */
+  }
+}
+
+p, li, label, span:not(.magnetic-btn span):not(.premium-service-card *):not(footer *):not([ref="projectsRef"] *):not(section[ref] *) {
+  font-family: 'Inter Tight', sans-serif;
+  color: #4A4A4A;
+}
+
+/* Small text details */
+.text-xs {
+  font-size: 0.875rem; /* 14px small details minimum font size */
+}
+
+@media (min-width: 1024px) {
+  .text-xs {
+    font-size: 1rem; /* 16px desktop small labels */
+  }
+}
+
+/* Navigation button links styling values */
+nav button, nav a {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+/* Button font specifications */
+button, .btn {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Specific class to force white color on hero header characters and texts */
+.text-white-force, .text-white-force span, .text-white-force p {
+  color: #FFFFFF !important;
+}
+
+.liquid-glass {
+  background: rgba(250, 245, 240, 0.65); /* Peach White Glass basis */
+  background-blend-mode: normal;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(138, 120, 180, 0.15); /* Soft lavender tint borders */
+  box-shadow: 0 4px 30px rgba(138, 120, 180, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.6) 0%, rgba(138,120,180,0.2) 20%,
+    rgba(138,120,180,0) 40%, rgba(138,120,180,0) 60%,
+    rgba(138,120,180,0.2) 80%, rgba(255,255,255,0.6) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Premium magnetic/micro-interactive CTA button animation styles */
+.magnetic-btn {
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.magnetic-btn:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 10px 20px rgba(138, 120, 180, 0.15);
+}
+
+.magnetic-btn:active {
+  transform: scale(0.98) translateY(0);
+}
+
+/* Premium Service Card Styles (Styled-components analog in vanilla CSS) */
+.premium-service-card {
+  position: relative;
+  background: rgba(250, 245, 240, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(138, 120, 180, 0.12);
+  border-radius: 15px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.premium-service-card::before,
+.premium-service-card::after {
+  position: absolute;
+  content: "";
+  width: 20%;
+  height: 20%;
+  background-color: rgba(138, 120, 180, 0.15); /* Lavender overlay block tint */
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.premium-service-card::before {
+  top: 0;
+  right: 0;
+  border-radius: 0 15px 0 100%;
+}
+
+.premium-service-card::after {
+  bottom: 0;
+  left: 0;
+  border-radius: 0 100% 0 15px;
+}
+
+.premium-service-card:hover {
+  border-color: rgba(138, 120, 180, 0.35);
+  box-shadow: 0 12px 30px rgba(138, 120, 180, 0.08);
+}
+
+.premium-service-card:hover::before,
+.premium-service-card:hover::after {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  background-color: rgba(138, 120, 180, 0.15); /* Keep soft lavender color layer on hover */
+}
+
+/* Custom scrollbar styling for premium feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF5F0;
+}
+::-webkit-scrollbar-thumb {
+  background: #E2D7CE;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C4B5A9;
+}
