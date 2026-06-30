@@ -241,11 +241,11 @@ export default function App() {
       />
 
       {/* HERO / STORY SECTION */}
-      <section ref={storyRef} className={`relative min-h-screen flex flex-col justify-center md:justify-end z-10 pt-24 pb-8 md:pb-12 transition-all duration-1000 delay-500 ${
+      <section ref={storyRef} className={`relative min-h-screen flex flex-col justify-end z-10 pt-24 pb-20 md:pb-12 transition-all duration-1000 delay-500 ${
         isLoading ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'
       }`}>
-        <div className="px-6 md:px-12 lg:px-16 flex-1 flex flex-col justify-center md:justify-end">
-          <div className="w-full mt-12 md:mt-0">
+        <div className="px-6 md:px-12 lg:px-16 flex-1 flex flex-col justify-end">
+          <div className="w-full">
             
             {/* Main Content */}
             <div className="max-w-3xl text-white-force">
