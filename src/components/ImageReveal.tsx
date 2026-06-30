@@ -124,7 +124,7 @@ const StickyProjectCard = ({ project, index }: { project: ProjectItem; index: nu
   const filterSpring = useSpring(filter, { stiffness: 450, damping: 28 });
 
   const isInView = useInView(container, {
-    margin: `0px 0px -${100 - vertMargin}% 0px`,
+    margin: `0px 0px -${75 - vertMargin}% 0px`,
     once: true,
   });
 
