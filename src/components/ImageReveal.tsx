@@ -165,7 +165,7 @@ export function ImageRevealSection() {
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col md:flex-row bg-black">
         
         {/* Left Column: Narrative Content */}
-        <div className="w-full md:w-1/2 h-[35vh] md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 z-10 select-none text-white!">
+        <div className="w-full md:w-1/2 h-[30vh] md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 z-10 select-none text-white!">
           {/* Floating Section Number */}
           <div className="overflow-hidden h-12 md:h-16 relative">
             <motion.span
@@ -228,7 +228,7 @@ export function ImageRevealSection() {
           ref={rightSideRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="w-full md:w-1/2 h-[65vh] md:h-full relative overflow-hidden bg-black cursor-crosshair"
+          className="w-full md:w-1/2 h-[70vh] md:h-full relative overflow-hidden bg-black cursor-crosshair"
         >
           {/* Soft vignette overlay */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.85)_100%)] pointer-events-none z-20" />
