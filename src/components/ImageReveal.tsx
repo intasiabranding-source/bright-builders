@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import { motion, useScroll } from "framer-motion";
+
 interface ProjectItem {
   id: string;
   number: string;
@@ -80,8 +83,31 @@ const projectsData: ProjectItem[] = [
 ];
 
 export function ImageRevealSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Track scroll progress across the entire projects wrapper container
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
   return (
-    <div className="w-full bg-black text-white">
+    <div ref={containerRef} className="w-full bg-black text-white relative">
+      
+      {/* Creative follow SVG line animation layer */}
+      <div className="absolute left-[8%] md:left-[5%] top-0 h-full w-[4px] md:w-[6px] pointer-events-none z-10 hidden sm:block">
+        <div className="w-full h-full bg-white/5 relative">
+          <motion.div 
+            className="w-full bg-[#8A78B4] absolute top-0 origin-top shadow-[0_0_12px_#8A78B4]"
+            style={{ 
+              scaleY: scrollYProgress,
+              height: "100%",
+              boxShadow: "0 0 20px #8A78B4, 0 0 40px #8A78B4" 
+            }}
+          />
+        </div>
+      </div>
+
       {/* Scroll-reveal heading wrapper */}
       <div className="text-center max-w-2xl mx-auto py-20 px-6">
         <span className="text-xs uppercase tracking-widest text-[#8A78B4] font-semibold block mb-2">// OUR PORTFOLIO</span>
@@ -99,7 +125,7 @@ export function ImageRevealSection() {
             className="w-full min-h-screen h-screen flex flex-col md:flex-row bg-black border-b border-white/5 overflow-hidden sticky top-0"
           >
             {/* Left Column: Narrative Content */}
-            <div className="w-full md:w-1/2 h-[35vh] md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white!">
+            <div className="w-full md:w-1/2 h-[35vh] md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white! pl-12 sm:pl-20 md:pl-28">
               {/* Floating Section Number */}
               <div className="h-12 md:h-16 relative">
                 <span className="text-3xl md:text-7xl font-bold tracking-widest block font-sans text-[#8A78B4]/20">
