@@ -250,7 +250,7 @@ export function ImageRevealSection() {
                       : "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
                   scale: isCurrent ? 1 : isPast ? 0.95 : 1.1,
                   filter: isCurrent ? "blur(0px) brightness(1)" : isPast ? "blur(8px) brightness(0.5)" : "blur(10px) brightness(0.4)",
-                  opacity: isCurrent ? 1 : isPast ? 0 : 0,
+                  opacity: isCurrent ? 1 : isPast ? 1 : 0,
                   zIndex: idx,
                 }}
                 style={{
