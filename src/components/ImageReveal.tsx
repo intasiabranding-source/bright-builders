@@ -95,7 +95,7 @@ export function ImageRevealSection() {
     <div ref={containerRef} className="w-full bg-black text-white relative">
       
       {/* Creative follow SVG line animation layer */}
-      <div className="absolute left-[18px] sm:left-[8%] md:left-[5%] top-0 h-full w-[3px] md:w-[6px] pointer-events-none z-10 block">
+      <div className="absolute left-0 sm:left-[8%] md:left-[5%] top-0 h-full w-[3px] md:w-[6px] pointer-events-none z-10 block">
         <div className="w-full h-full bg-white/5 relative">
           <motion.div 
             className="w-full bg-[#8A78B4] absolute top-0 origin-top shadow-[0_0_12px_#8A78B4]"
@@ -131,7 +131,7 @@ export function ImageRevealSection() {
             {/* Inner responsive card wrapper with curved border on mobile */}
             <div className="w-full h-full flex flex-col md:flex-row border border-white/10 md:border-0 rounded-2xl md:rounded-none overflow-hidden transition-all duration-500 hover:border-[#8A78B4]/30 shadow-[0_15px_35px_rgba(0,0,0,0.85)] hover:shadow-[0_8px_30px_rgba(138,120,180,0.15)]">
             {/* Left Column: Narrative Content */}
-            <div className="w-full md:w-1/2 h-auto md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white! pl-8 sm:pl-20 md:pl-28">
+            <div className="w-full md:w-1/2 h-auto md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white! pl-6 sm:pl-20 md:pl-28">
               {/* Floating Section Number */}
               <div className="h-12 md:h-16 relative">
                 <span className="text-3xl md:text-7xl font-bold tracking-widest block font-sans text-[#8A78B4]/20">
