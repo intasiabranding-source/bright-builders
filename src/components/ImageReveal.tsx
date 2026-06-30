@@ -1,4 +1,8 @@
-import { Building2 } from 'lucide-react';
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { Building2 } from "lucide-react";
 
 interface ProjectItem {
   id: string;
@@ -81,55 +85,116 @@ const projectsData: ProjectItem[] = [
   },
 ];
 
-export function ImageRevealSection() {
+const StickyCard_001 = ({
+  i,
+  title,
+  description,
+  imgUrl,
+  number,
+  progress,
+  range,
+  targetScale,
+}: {
+  i: number;
+  title: string;
+  description: string;
+  imgUrl: string;
+  number: string;
+  progress: any;
+  range: [number, number];
+  targetScale: number;
+}) => {
+  const container = useRef<HTMLDivElement>(null);
+  const scale = useTransform(progress, range, [1, targetScale]);
+
   return (
-    <div className="w-full bg-black text-white px-6 md:px-12 lg:px-16 py-20 md:py-28 max-w-7xl mx-auto border-t border-white/5">
-      <div className="text-center max-w-2xl mx-auto mb-16">
+    <div
+      ref={container}
+      className="sticky top-0 flex min-h-screen items-center justify-center px-4 md:px-6 z-10"
+    >
+      <motion.div
+        style={{
+          scale,
+          top: `calc(10vh + ${i * 24}px)`,
+        }}
+        className="relative flex flex-col md:flex-row h-[75vh] md:h-[60vh] w-full max-w-4xl origin-top rounded-3xl border border-white/10 bg-zinc-950 overflow-hidden shadow-[0_-20px_50px_rgba(0,0,0,0.8)]"
+      >
+        {/* Left/Top Content Column */}
+        <div className="w-full md:w-1/2 flex flex-col justify-between p-6 md:p-12 z-10 select-none text-white bg-zinc-950">
+          <div>
+            <span className="text-3xl md:text-5xl font-bold tracking-widest block font-sans text-[#8A78B4]/20 mb-4 md:mb-6">
+              {number}
+            </span>
+            <h3 className="text-xl md:text-3xl font-bold font-display leading-tight text-white mb-3">
+              {title}
+            </h3>
+            <p className="text-xs md:text-sm text-gray-400 font-sans font-light leading-relaxed">
+              {description}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A78B4] opacity-80 pt-4 border-t border-white/5 mt-4">
+            <Building2 className="w-4 h-4" />
+            <span>BT Bright Builders</span>
+          </div>
+        </div>
+
+        {/* Right/Bottom Image Column */}
+        <div className="w-full md:w-1/2 h-[45%] md:h-full relative overflow-hidden bg-black">
+          <img 
+            src={imgUrl} 
+            alt={title} 
+            className="w-full h-full object-cover" 
+            loading="lazy" 
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export function ImageRevealSection() {
+  const container = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start start", "end end"],
+  });
+
+  return (
+    <div className="w-full bg-black text-white py-16 md:py-28 border-t border-white/5">
+      <div className="text-center max-w-2xl mx-auto mb-12 px-6">
         <span className="text-xs uppercase tracking-widest text-[#8A78B4] font-semibold block mb-2">// OUR PORTFOLIO</span>
         <h2 className="text-4xl md:text-5xl font-light tracking-tight text-white font-display">Featured Projects</h2>
         <p className="text-gray-400 mt-3 text-sm md:text-base font-light">
-          A showcase of our premium residential, commercial, and interior design executions.
+          Scroll down to reveal our stacked portfolio projects.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projectsData.map((project) => (
-          <div 
-            key={project.id}
-            className="group flex flex-col bg-zinc-900/40 rounded-2xl overflow-hidden border border-white/5 transition-all duration-500 hover:border-[#8A78B4]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)]"
-          >
-            {/* Image Container */}
-            <div className="aspect-[4/3] w-full overflow-hidden bg-zinc-950 relative">
-              <img 
-                src={project.imgUrl} 
-                alt={project.title} 
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-white/80">
-                {project.number}
-              </div>
-            </div>
-
-            {/* Narrative Content */}
-            <div className="p-6 flex flex-col flex-1 justify-between gap-4">
-              <div>
-                <h3 className="text-lg font-semibold font-display text-white group-hover:text-[#8A78B4] transition-colors duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-gray-400 mt-2 font-sans font-light leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-              
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A78B4] opacity-80 pt-2 border-t border-white/5">
-                <Building2 className="w-3.5 h-3.5" />
-                <span>BT Bright Builders</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <main
+        ref={container}
+        className="relative flex w-full flex-col items-center justify-center pb-[10vh]"
+      >
+        {projectsData.map((project, i) => {
+          const targetScale = Math.max(
+            0.8,
+            1 - (projectsData.length - i - 1) * 0.02,
+          );
+          const rangeStart = i * (1 / projectsData.length);
+          return (
+            <StickyCard_001
+              key={project.id}
+              i={i}
+              title={project.title}
+              description={project.description}
+              imgUrl={project.imgUrl}
+              number={project.number}
+              progress={scrollYProgress}
+              range={[rangeStart, 1]}
+              targetScale={targetScale}
+            />
+          );
+        })}
+      </main>
     </div>
   );
 }
