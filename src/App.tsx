@@ -152,14 +152,14 @@ export default function App() {
   }, [navLinks]);
 
   return (
-    <div className={`relative min-h-screen bg-[#FAF5F0] text-[#1A1A1A] font-sans selection:bg-[#8A78B4] selection:text-white transition-opacity duration-1000 ${
+    <div className={`relative min-h-screen w-screen overflow-x-hidden bg-[#FAF5F0] text-[#1A1A1A] font-sans selection:bg-[#8A78B4] selection:text-white transition-opacity duration-1000 ${
       isLoading ? 'overflow-hidden max-h-screen' : 'opacity-100'
     }`}>
       {/* Premium Fullscreen Preloader */}
       <Preloader onComplete={() => setIsLoading(false)} />
       
       {/* BACKGROUND VIDEO (Full viewport, absolutely positioned in back) */}
-      <div className="absolute top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-0">
+      <div className="absolute top-0 left-0 w-screen h-screen overflow-hidden pointer-events-none z-0">
         <video
           autoPlay
           loop

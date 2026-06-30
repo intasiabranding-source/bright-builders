@@ -152,7 +152,7 @@ export function ImageRevealSection() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full bg-black text-white" style={{ height: "400vh" }}>
+    <div ref={containerRef} className="relative w-screen overflow-x-hidden bg-black text-white" style={{ height: "400vh" }}>
       {/* 2-3% Opacity Film Grain Texture Overlay */}
       <div 
         className="fixed inset-0 pointer-events-none z-40 opacity-[0.025]"
@@ -162,7 +162,7 @@ export function ImageRevealSection() {
       />
 
       {/* Sticky container */}
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col md:flex-row bg-black">
+      <div className="sticky top-0 left-0 w-screen h-screen overflow-hidden flex flex-col md:flex-row bg-black">
         
         {/* Left Column: Narrative Content */}
         <div className="w-full md:w-1/2 h-[20%] md:h-full flex flex-col justify-between p-4 md:p-16 lg:p-24 z-10 select-none text-white!">
