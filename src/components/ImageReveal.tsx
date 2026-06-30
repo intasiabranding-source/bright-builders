@@ -111,7 +111,7 @@ export function ImageRevealSection() {
       {/* Scroll-reveal heading wrapper */}
       <div className="text-center max-w-2xl mx-auto py-20 px-6">
         <span className="text-xs uppercase tracking-widest text-[#8A78B4] font-semibold block mb-2">// OUR PORTFOLIO</span>
-        <h2 className="text-4xl md:text-5xl font-light tracking-tight text-white font-display">Featured Projects</h2>
+        <h2 className="text-4xl md:text-5xl font-light tracking-tight text-white-force text-white font-display">Featured Projects</h2>
         <p className="text-gray-400 mt-3 text-sm md:text-base font-light">
           Scroll down to browse our custom residential and luxury interior designs.
         </p>
