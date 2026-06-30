@@ -252,7 +252,7 @@ export default function App() {
               {/* Mobile Heading (exactly 4 lines: Shaping / tomorrow / with vision and / action) */}
               <div className="block md:hidden">
                 <AnimatedHeading
-                  text={"Shaping\ntomorrow\nwith vision and\naction."}
+                  text={"Shaping\ntomorrow\nwith vision\naction."}
                   initialDelay={200}
                   charDelay={30}
                   className="text-[2.2rem] sm:text-4xl font-normal mb-4 leading-tight text-white-force"
