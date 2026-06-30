@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useMotionValue, useScroll, useTransform, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Building2 } from 'lucide-react';
 
@@ -116,7 +116,13 @@ const StickyProjectCard = ({ project, index }: { project: ProjectItem; index: nu
   const { scrollY } = useScroll({
     target: container,
   });
-  const scale = useTransform(scrollY, [maxScrollY, maxScrollY + 10000], [1, 0]);
+  // Target window for transition - reduced from 10000 to 1200 to trigger fast quick-view animations
+  const rawScale = useTransform(scrollY, [maxScrollY, maxScrollY + 1200], [1, 0]);
+  
+  // 0.1s high-stiffness spring follow settings for quick views
+  const scale = useSpring(rawScale, { stiffness: 450, damping: 28 });
+  const filterSpring = useSpring(filter, { stiffness: 450, damping: 28 });
+
   const isInView = useInView(container, {
     margin: `0px 0px -${100 - vertMargin}% 0px`,
     once: true,
@@ -125,11 +131,11 @@ const StickyProjectCard = ({ project, index }: { project: ProjectItem; index: nu
   scrollY.on("change", (latestScrollY) => {
     let animationValue = 1;
     if (latestScrollY > maxScrollY) {
-      animationValue = Math.max(0, 1 - (latestScrollY - maxScrollY) / 10000);
+      animationValue = Math.max(0, 1 - (latestScrollY - maxScrollY) / 1200);
     }
 
-    scale.set(animationValue);
-    filter.set((1 - animationValue) * 100);
+    rawScale.set(animationValue);
+    filter.set((1 - animationValue) * 8); // Subtler rotation tilt (max 8 degrees)
   });
 
   useEffect(() => {
@@ -144,7 +150,7 @@ const StickyProjectCard = ({ project, index }: { project: ProjectItem; index: nu
       className="sticky w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-zinc-950 flex flex-col md:flex-row"
       style={{
         scale: scale,
-        rotate: filter,
+        rotate: filterSpring,
         height: `calc(${100 - 2 * vertMargin}vh - 30px)`,
         top: `${vertMargin}vh`,
         zIndex: index + 1,
