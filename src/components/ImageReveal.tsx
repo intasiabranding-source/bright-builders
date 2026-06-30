@@ -152,7 +152,7 @@ export function ImageRevealSection() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full bg-black text-white min-h-[400vh]" style={{ height: "400vh" }}>
+    <div ref={containerRef} className="relative w-full bg-black text-white" style={{ height: "400vh" }}>
       {/* 2-3% Opacity Film Grain Texture Overlay */}
       <div 
         className="fixed inset-0 pointer-events-none z-40 opacity-[0.025]"
@@ -165,24 +165,24 @@ export function ImageRevealSection() {
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col md:flex-row bg-black">
         
         {/* Left Column: Narrative Content */}
-        <div className="w-full md:w-1/2 h-[30vh] md:h-full flex flex-col justify-between p-4 md:p-16 lg:p-24 z-10 select-none text-white!">
+        <div className="w-full md:w-1/2 h-[35vh] md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 z-10 select-none text-white!">
           {/* Floating Section Number */}
-          <div className="overflow-hidden h-6 md:h-16 relative">
+          <div className="overflow-hidden h-12 md:h-16 relative">
             <motion.span
               key={activeIndex}
               initial={{ y: 50, rotateX: 45, opacity: 0 }}
               animate={{ y: 0, rotateX: 0, opacity: 0.15 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-2xl md:text-7xl font-bold tracking-widest block font-sans text-white/15 text-white!"
+              className="text-4xl md:text-7xl font-bold tracking-widest block font-sans text-white/15 text-white!"
             >
               {projectsData[activeIndex].number}
             </motion.span>
           </div>
 
           {/* Heading with Character-by-Character transition */}
-          <div className="space-y-1 md:space-y-6 max-w-md text-white!">
+          <div className="space-y-2 md:space-y-6 max-w-md text-white!">
             <div className="overflow-hidden">
-              <h2 className="text-lg sm:text-2xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight font-display text-white! text-white flex flex-wrap gap-x-2">
+              <h2 className="text-xl sm:text-2xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight font-display text-white! text-white flex flex-wrap gap-x-2">
                 {projectsData[activeIndex].title.split(" ").map((word, wIdx) => (
                   <span key={wIdx} className="inline-block overflow-hidden py-0.5 md:py-1 text-white!">
                     <motion.span
@@ -228,7 +228,7 @@ export function ImageRevealSection() {
           ref={rightSideRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="w-full md:w-1/2 h-[70vh] md:h-full relative overflow-hidden bg-black cursor-crosshair"
+          className="w-full md:w-1/2 h-[65vh] md:h-full relative overflow-hidden bg-black cursor-crosshair"
         >
           {/* Soft vignette overlay */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.85)_100%)] pointer-events-none z-20" />
@@ -260,11 +260,10 @@ export function ImageRevealSection() {
                 }}
                 transition={{
                   duration: 0.9,
-                  ease: [0.22, 1, 0.36, 1], // Custom cubic-bezier easing
+                  ease: [0.22, 1, 0.36, 1],
                 }}
                 className="absolute inset-0 w-full h-full will-change-transform will-change-[clip-path,filter,opacity]"
               >
-                {/* Parallax image layer */}
                 <ParallaxImage 
                   src={project.imgUrl} 
                   alt={project.title} 
@@ -301,7 +300,7 @@ export function ImageRevealSection() {
             </div>
           </div>
 
-          {/* Top Right Corner View Details Button (Mobile Only) with lavender magnetic style animations */}
+          {/* Top Right Corner View Details Button */}
           <div className="absolute top-4 right-4 z-30 block md:hidden">
             <button
               onClick={() => setIsModalOpen(true)}
@@ -313,13 +312,14 @@ export function ImageRevealSection() {
               View Details
             </button>
           </div>
+
         </div>
 
       </div>
 
       {/* Dynamic Mobile Modal overlay */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-6 md:hidden">
+        <div className="fixed inset-0 z-55 bg-black/95 flex flex-col items-center justify-center p-6 md:hidden">
           <div className="max-w-md w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative">
             <img 
               src={projectsData[activeIndex].imgUrl} 
