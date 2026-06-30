@@ -1,7 +1,3 @@
-"use client";
-
-import { motion, useInView, useMotionValue, useScroll, useTransform, useSpring } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
 import { Building2 } from 'lucide-react';
 
 interface ProjectItem {
@@ -96,99 +92,44 @@ export function ImageRevealSection() {
         </p>
       </div>
 
-      <div className="relative flex w-full flex-col items-center gap-[6vh] py-[4vh]">
-        {projectsData.map((project, idx) => (
-          <StickyProjectCard key={project.id} project={project} index={idx} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projectsData.map((project) => (
+          <div 
+            key={project.id}
+            className="flex flex-col bg-zinc-900/40 rounded-2xl overflow-hidden border border-white/5"
+          >
+            {/* Image Container */}
+            <div className="aspect-[4/3] w-full overflow-hidden bg-zinc-950 relative">
+              <img 
+                src={project.imgUrl} 
+                alt={project.title} 
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-white/80">
+                {project.number}
+              </div>
+            </div>
+
+            {/* Narrative Content */}
+            <div className="p-6 flex flex-col flex-1 justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-semibold font-display text-white">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-gray-400 mt-2 font-sans font-light leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+              
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A78B4] opacity-80 pt-2 border-t border-white/5">
+                <Building2 className="w-3.5 h-3.5" />
+                <span>BT Bright Builders</span>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </div>
   );
 }
-
-const StickyProjectCard = ({ project, index }: { project: ProjectItem; index: number }) => {
-  const vertMargin = 12;
-  const container = useRef<HTMLDivElement>(null);
-  const [maxScrollY, setMaxScrollY] = useState(Infinity);
-
-  const filter = useMotionValue(0);
-  const negateFilter = useTransform(filter, (value) => -value);
-
-  const { scrollY } = useScroll({
-    target: container,
-  });
-  // Target window for transition - reduced from 10000 to 1200 to trigger fast quick-view animations
-  const rawScale = useTransform(scrollY, [maxScrollY, maxScrollY + 1200], [1, 0]);
-  
-  // 0.1s high-stiffness spring follow settings for quick views
-  const scale = useSpring(rawScale, { stiffness: 450, damping: 28 });
-  const filterSpring = useSpring(filter, { stiffness: 450, damping: 28 });
-
-  const isInView = useInView(container, {
-    margin: `0px 0px -${75 - vertMargin}% 0px`,
-    once: true,
-  });
-
-  scrollY.on("change", (latestScrollY) => {
-    let animationValue = 1;
-    if (latestScrollY > maxScrollY) {
-      animationValue = Math.max(0, 1 - (latestScrollY - maxScrollY) / 1200);
-    }
-
-    rawScale.set(animationValue);
-    filter.set((1 - animationValue) * 8); // Subtler rotation tilt (max 8 degrees)
-  });
-
-  useEffect(() => {
-    if (isInView) {
-      setMaxScrollY(scrollY.get());
-    }
-  }, [isInView]);
-
-  return (
-    <motion.div
-      ref={container}
-      className="sticky w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-zinc-950 flex flex-col md:flex-row"
-      style={{
-        scale: scale,
-        rotate: filterSpring,
-        height: `calc(${100 - 2 * vertMargin}vh - 30px)`,
-        top: `${vertMargin}vh`,
-        zIndex: index + 1,
-        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.6)"
-      }}
-    >
-      {/* Narrative Info Block */}
-      <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-between select-none z-15 bg-zinc-950/80 backdrop-blur-md">
-        <div>
-          <div className="text-3xl md:text-5xl font-bold tracking-widest text-[#8A78B4]/20 font-sans block mb-4">
-            {project.number}
-          </div>
-          <h3 className="text-2xl md:text-3xl font-semibold font-display text-white mb-4">
-            {project.title}
-          </h3>
-          <p className="text-xs sm:text-sm md:text-base text-gray-400 font-sans font-light leading-relaxed">
-            {project.description}
-          </p>
-        </div>
-        
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A78B4] opacity-80 pt-4 border-t border-white/5 mt-6">
-          <Building2 className="w-3.5 h-3.5" />
-          <span>BT Bright Builders</span>
-        </div>
-      </div>
-
-      {/* Image Area */}
-      <div className="w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden bg-black flex-1">
-        <motion.img
-          src={project.imgUrl}
-          alt={project.title}
-          style={{
-            rotate: negateFilter,
-          }}
-          className="h-full w-full scale-125 object-cover"
-          loading="eager"
-        />
-      </div>
-    </motion.div>
-  );
-};
