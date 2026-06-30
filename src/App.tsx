@@ -92,10 +92,11 @@ export default function App() {
     const handleScrollDirection = () => {
       const currentScrollY = window.scrollY;
       
-      // Always show navbar on top of screen / in home section
-      if (currentScrollY < window.innerHeight - 100) {
-        setShowNav(true);
+      // If we are inside the home section, hide the navbar
+      if (currentScrollY < window.innerHeight) {
+        setShowNav(false);
       } else {
+        // After the home section, show/hide based on scroll direction
         if (currentScrollY > lastScrollYVal) {
           // Scrolling down -> hide navbar
           setShowNav(false);
@@ -229,9 +230,9 @@ export default function App() {
       <NavBar 
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        className={`transition-all duration-1000 delay-500 ${
-          isLoading ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-        } ${showNav ? 'translate-y-0' : '-translate-y-28 md:translate-y-0'}`}
+        className={`transition-all duration-700 ${
+          isLoading ? 'opacity-0 translate-y-4' : 'opacity-100'
+        } ${showNav ? 'translate-y-0' : '-translate-y-28'}`}
         items={navLinks.map(link => ({
           name: link.label,
           key: link.key,
