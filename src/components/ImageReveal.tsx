@@ -1,5 +1,3 @@
-import { Building2 } from 'lucide-react';
-
 interface ProjectItem {
   id: string;
   number: string;
@@ -83,49 +81,59 @@ const projectsData: ProjectItem[] = [
 
 export function ImageRevealSection() {
   return (
-    <div className="w-full bg-black text-white px-4 md:px-12 lg:px-16 py-20 md:py-28 max-w-7xl mx-auto border-t border-white/5">
-      <div className="text-center max-w-2xl mx-auto mb-16">
+    <div className="w-full bg-black text-white">
+      {/* Scroll-reveal heading wrapper */}
+      <div className="text-center max-w-2xl mx-auto py-20 px-6">
         <span className="text-xs uppercase tracking-widest text-[#8A78B4] font-semibold block mb-2">// OUR PORTFOLIO</span>
         <h2 className="text-4xl md:text-5xl font-light tracking-tight text-white font-display">Featured Projects</h2>
         <p className="text-gray-400 mt-3 text-sm md:text-base font-light">
-          A showcase of our premium residential, commercial, and interior design executions.
+          Scroll down to browse our custom residential and luxury interior designs.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Main Full-page Cards Container */}
+      <div className="flex flex-col w-full">
         {projectsData.map((project) => (
           <div 
             key={project.id}
-            className="flex flex-col bg-zinc-900/40 rounded-2xl overflow-hidden border border-white/5"
+            className="w-full min-h-screen h-screen flex flex-col md:flex-row bg-black border-b border-white/5 overflow-hidden sticky top-0"
           >
-            {/* Image Container */}
-            <div className="aspect-[4/3] w-full overflow-hidden bg-zinc-950 relative">
+            {/* Left Column: Narrative Content */}
+            <div className="w-full md:w-1/2 h-[35vh] md:h-full flex flex-col justify-between p-6 md:p-16 lg:p-24 bg-zinc-950/40 select-none text-white!">
+              {/* Floating Section Number */}
+              <div className="h-12 md:h-16 relative">
+                <span className="text-3xl md:text-7xl font-bold tracking-widest block font-sans text-[#8A78B4]/20">
+                  {project.number}
+                </span>
+              </div>
+
+              {/* Heading and Narrative info */}
+              <div className="space-y-4 md:space-y-6 max-w-md text-white!">
+                <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight font-display text-white!">
+                  {project.title}
+                </h2>
+                <div className="w-12 h-0.5 bg-white opacity-40 my-2" />
+                <p className="text-xs sm:text-sm md:text-base text-gray-400 font-sans font-light leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Bottom labeling */}
+              <div className="flex items-center gap-4 text-[10px] md:text-xs tracking-widest uppercase opacity-90 text-white font-sans font-bold mt-4">
+                <span>Portfolio</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8A78B4]" />
+                <span>BT Bright Builders</span>
+              </div>
+            </div>
+
+            {/* Right Column: Project Image Area */}
+            <div className="w-full md:w-1/2 h-[65vh] md:h-full relative overflow-hidden bg-black">
               <img 
                 src={project.imgUrl} 
                 alt={project.title} 
                 className="w-full h-full object-cover"
-                loading="lazy"
+                loading="eager"
               />
-              <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-white/80">
-                {project.number}
-              </div>
-            </div>
-
-            {/* Narrative Content */}
-            <div className="p-6 flex flex-col flex-1 justify-between gap-4">
-              <div>
-                <h3 className="text-lg font-semibold font-display text-white">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-gray-400 mt-2 font-sans font-light leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-              
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A78B4] opacity-80 pt-2 border-t border-white/5">
-                <Building2 className="w-3.5 h-3.5" />
-                <span>BT Bright Builders</span>
-              </div>
             </div>
           </div>
         ))}
