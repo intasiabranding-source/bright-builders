@@ -272,7 +272,7 @@ export default function App() {
 
               <FadeIn delay={800} duration={1000}>
                 <p className="text-sm md:text-lg mb-6 max-w-lg leading-relaxed font-light text-white-force">
-                  We back visionaries and craft ventures that define what comes next.
+                  Your trust is our asset
                 </p>
               </FadeIn>
 
